@@ -1,0 +1,19 @@
+﻿<Window x:Class="WpfApp_Ex1_Repas.WindowAjustes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp_Ex1_Repas"
+        mc:Ignorable="d"
+        Title="Ajustes" Height="137" Width="662" Icon="Images/icono.ico">
+    <Grid Margin="0,0,0,-4" RenderTransformOrigin="0.502,0.727">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="260*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Cambiar" HorizontalAlignment="Left" Margin="435,28,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Height="23" Grid.Column="1"/>
+        <TextBox  x:Name="TextboxPath"  HorizontalAlignment="Left" Margin="107,26,0,49" TextWrapping="Wrap" Text="Cambiar ubicación de la música" Width="442" Grid.ColumnSpan="2"/>
+        <Button Content="Vovler" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>
