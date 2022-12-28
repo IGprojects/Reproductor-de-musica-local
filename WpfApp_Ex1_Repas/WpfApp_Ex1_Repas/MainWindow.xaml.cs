@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -21,6 +21,7 @@ namespace WpfApp_Ex1_Repas
         public static int cansoReproduintse = 0;
         public static string path = @"C:\Users\iferr\source\repos\WpfApp_Ex1_Repas\WpfApp_Ex1_Repas\Music";/* @"..\..\Music\"*/
         public string imatgesd = "pack://application:,,,/Images/cargando.png";
+        public string fotoError = "pack://application:,,,/Images/icono.png";
         public static bool directoriBuit = true;
         public static bool cambiDirectori;
         public MainWindow()
@@ -39,7 +40,7 @@ namespace WpfApp_Ex1_Repas
             {
                 if (cambiDirectori==true) { imatges.Clear(); musiques.Clear(); cansoReproduintse = 0; cambiDirectori=false; Debug.WriteLine(musiques.Count); }
                 imatges = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".png") || s.EndsWith(".jpg")).ToList<string>();
-                musiques = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".wav") || s.EndsWith(".mp3")).ToList<string>();
+                musiques = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".wav")).ToList<string>();
             }
             else{directoriBuit = true;} 
 
@@ -53,7 +54,13 @@ namespace WpfApp_Ex1_Repas
             {
                 simpleSound.SoundLocation = musiques[cansoReproduintse];
                 textBoxNomCanso.Text = musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>();
-                contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
+                if (ComprobarCanso(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Remove(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Length-4)) == true)
+                {
+                    contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
+                }
+                else {
+                    contenidorImatge.Source = new BitmapImage(new Uri(fotoError));
+                }
             }
             simpleSound.Play();
         }
@@ -63,8 +70,14 @@ namespace WpfApp_Ex1_Repas
             {
                 simpleSound.SoundLocation = musiques[cansoReproduintse];
                 textBoxNomCanso.Text = musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>();
-                contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
-
+                if (ComprobarCanso(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Remove(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Length - 4)) == true)
+                {
+                    contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
+                }
+                else
+                {
+                    contenidorImatge.Source = new BitmapImage(new Uri(fotoError));
+                }
                 simpleSound.Play();
             }
         }
@@ -90,7 +103,14 @@ namespace WpfApp_Ex1_Repas
             }
             textBoxNomCanso.Text = musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>();
             simpleSound.SoundLocation = musiques[cansoReproduintse];
-            contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
+            if (ComprobarCanso(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Remove(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Length - 4)) == true)
+            {
+                contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
+            }
+            else
+            {
+                contenidorImatge.Source = new BitmapImage(new Uri(fotoError));
+            }
             simpleSound.Play();
         }
 
@@ -99,7 +119,14 @@ namespace WpfApp_Ex1_Repas
             cansoReproduintse--;
             textBoxNomCanso.Text = musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>();
             simpleSound.SoundLocation = musiques[cansoReproduintse];
-            contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
+            if (ComprobarCanso(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Remove(musiques[cansoReproduintse].Split('\\').ToList<string>().Last<string>().Length - 4)) == true)
+            {
+                contenidorImatge.Source = new BitmapImage(new Uri(imatges[cansoReproduintse]));
+            }
+            else
+            {
+                contenidorImatge.Source = new BitmapImage(new Uri(fotoError));
+            }
             simpleSound.Play();
         }
 
@@ -108,6 +135,17 @@ namespace WpfApp_Ex1_Repas
             WindowAjustes ventanaAjustes = new WindowAjustes();
             ventanaAjustes.TextboxPath.Text = path;
             ventanaAjustes.Show();
+        }
+
+        public bool ComprobarCanso(string nomCanso)
+        {
+            bool f=false;
+            for (int i = 0; i < imatges.Count; i++)
+            {
+                if (imatges[i].Contains(nomCanso) == true)
+                {f=true;}
+            }
+            return f;
         }
     }
 }
